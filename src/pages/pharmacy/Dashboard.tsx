@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Package, AlertTriangle, Plus, Edit, TrendingDown, Clock } from "lucide-react";
+import { Package, AlertTriangle, Plus, Edit, TrendingDown, Clock, ScanBarcode, QrCode } from "lucide-react";
 import { useApp } from "../../context/AppContext";
 import { Card, StatCard, Button, Badge, Modal, Input, Select, Tabs, EmptyState } from "../../components/ui";
 import { formatDate, getStockStatusColor, getStockStatusLabel } from "../../lib/utils";
@@ -15,6 +15,8 @@ export default function PharmacyDashboard() {
   const [updateQty, setUpdateQty] = useState("");
   const [form, setForm] = useState({ name: "", genericName: "", category: "", batchNumber: "", quantity: "", expiryDate: "", location: "Palghar Store", district: "Palghar", state: "Maharashtra", price: "" });
   const [loading, setLoading] = useState(false);
+  const [scanningId, setScanningId] = useState<string | null>(null);
+  const [isScanning, setIsScanning] = useState(false);
 
   const myInventory = inventory.filter(i => i.providerId === "ph1");
   const available = myInventory.filter(i => i.status === "available");
@@ -52,11 +54,50 @@ export default function PharmacyDashboard() {
     setLoading(false);
   };
 
+  const handleSimulateSell = async (item: InventoryItem) => {
+    if (item.quantity <= 0) {
+      toast.error(`${item.name} is out of stock!`);
+      return;
+    }
+    setScanningId(item.id);
+    await new Promise(r => setTimeout(r, 600)); // Simulate scan delay
+    const newQty = item.quantity - 1;
+    updateInventory(item.id, { 
+      quantity: newQty, 
+      status: newQty === 0 ? "out_of_stock" : newQty < 20 ? "low_stock" : "available" 
+    });
+    toast.success(`Scanned! Sold 1 unit of ${item.name}. ${newQty} remaining.`);
+    setScanningId(null);
+  };
+
+  const handleSimulateScanToAdd = async () => {
+    setIsScanning(true);
+    await new Promise(r => setTimeout(r, 800)); // Simulate scanning QR/Barcode
+    
+    // Auto-fill form
+    setForm(p => ({
+      ...p,
+      name: "Amoxicillin 250mg",
+      genericName: "Amoxicillin Trihydrate",
+      category: "Antibiotic",
+      batchNumber: "B2026AMX-NEW",
+      quantity: "50",
+      expiryDate: "2027-12-31",
+      price: "35",
+      location: "Palghar Store",
+      district: "Palghar",
+      state: "Maharashtra"
+    }));
+    
+    toast.success("Barcode scanned successfully! Details fetched.");
+    setIsScanning(false);
+  };
+
   return (
     <div className="space-y-5 animate-fade-in">
-      <div className="flex items-start justify-between">
+      <div className="page-header">
         <div>
-          <h1 className="text-xl font-bold text-slate-800">Pharmacy Dashboard</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-800">Pharmacy Dashboard</h1>
           <p className="text-slate-500 text-sm mt-0.5">Community Pharmacy Palghar · Palghar, Maharashtra</p>
         </div>
         <Button variant="primary" onClick={() => setShowAdd(true)}><Plus size={14} />Add Medicine</Button>
@@ -77,7 +118,7 @@ export default function PharmacyDashboard() {
       )}
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="stat-grid">
         <StatCard title="Total Medicines" value={myInventory.length} icon={<Package size={20} className="text-blue-600" />} iconBg="bg-blue-100" />
         <StatCard title="Available" value={available.length} icon={<Package size={20} className="text-emerald-600" />} iconBg="bg-emerald-100" />
         <StatCard title="Low Stock" value={lowStock.length} icon={<TrendingDown size={20} className="text-amber-600" />} iconBg="bg-amber-100" change={lowStock.length > 0 ? "Needs restock" : ""} changeType="down" />
@@ -117,7 +158,10 @@ export default function PharmacyDashboard() {
                       </span>
                     </td>
                     <td>
-                      <div className="flex gap-1">
+                      <div className="flex gap-1 items-center">
+                        <Button size="sm" variant="ghost" className="text-blue-600 hover:bg-blue-50" onClick={() => handleSimulateSell(i)} disabled={scanningId === i.id}>
+                          <ScanBarcode size={13} className={scanningId === i.id ? "animate-pulse text-blue-400" : ""} />
+                        </Button>
                         <Button size="sm" variant="ghost" onClick={() => { setSelected(i); setUpdateQty(String(i.quantity)); setShowUpdate(true); }}>
                           <Edit size={11} />
                         </Button>
@@ -138,7 +182,16 @@ export default function PharmacyDashboard() {
       <Modal isOpen={showAdd} onClose={() => setShowAdd(false)} title="Add Medicine to Inventory" size="md"
         footer={<><Button variant="secondary" onClick={() => setShowAdd(false)}>Cancel</Button><Button variant="primary" loading={loading} onClick={handleAdd}>Add Medicine</Button></>}
       >
-        <div className="space-y-3">
+        <div className="space-y-4">
+          <div className="flex items-center justify-between p-3 bg-blue-50 border border-blue-100 rounded-lg">
+            <div className="flex items-center gap-2 text-blue-800">
+              <QrCode size={16} />
+              <span className="text-sm font-medium">Have a shipment?</span>
+            </div>
+            <Button size="sm" variant="primary" className="bg-blue-600 hover:bg-blue-700 text-xs py-1" onClick={handleSimulateScanToAdd} loading={isScanning}>
+              Simulate Scan Barcode
+            </Button>
+          </div>
           <div className="grid grid-cols-2 gap-3">
             <Input label="Medicine Name *" id="med-name" placeholder="Paracetamol 500mg" value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} />
             <Input label="Generic Name" id="med-generic" placeholder="Paracetamol" value={form.genericName} onChange={e => setForm(p => ({ ...p, genericName: e.target.value }))} />

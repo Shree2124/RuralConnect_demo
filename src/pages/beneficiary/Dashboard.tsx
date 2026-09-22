@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Calendar, Pill, MapPin, Send, Bell, Heart, Search, ChevronRight, Clock, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { Calendar, Pill, MapPin, Send, Bell, Heart, Search, Clock, ArrowRight } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useApp } from "../../context/AppContext";
-import { Card, StatCard, Badge, Button, EmptyState } from "../../components/ui";
-import { formatDate, formatTime, getStockStatusColor, getStockStatusLabel } from "../../lib/utils";
-import { Link, useNavigate } from "react-router-dom";
+import { Card, StatCard, EmptyState } from "../../components/ui";
+import { formatDate, formatTime, getStockStatusLabel } from "../../lib/utils";
+import { Link } from "react-router-dom";
 
 const QUICK_ACTIONS = [
   { label: "Check Symptoms", icon: <Heart size={18} />, to: "/beneficiary/care-assistant", color: "bg-red-50 text-red-600 border-red-100 hover:bg-red-100" },
@@ -14,33 +14,47 @@ const QUICK_ACTIONS = [
   { label: "My Referrals", icon: <Send size={18} />, to: "/beneficiary/referrals", color: "bg-amber-50 text-amber-600 border-amber-100 hover:bg-amber-100" },
 ];
 
-const CARE_TIMELINE = [
-  { date: "Today", items: [{ time: "8:00 AM", text: "Paracetamol 500mg reminder", type: "medicine" }, { time: "10:00 AM", text: "Follow-up — Dr. Vikram Singh, PHC Palghar", type: "appointment" }] },
-  { date: "Tomorrow", items: [{ time: "8:00 AM", text: "Take Paracetamol 500mg", type: "medicine" }] },
-  { date: "15 Sep", items: [{ time: "8:00 AM", text: "Tetanus booster vaccination — Ayushman Arogya Mandir", type: "vaccination" }] },
-];
-
-const NEARBY_SERVICES = [
-  { name: "Ayushman Arogya Mandir Safale", type: "Arogya Mandir", distance: "1.2 km", status: "Open" },
-  { name: "PHC Palghar", type: "PHC", distance: "4.2 km", status: "Open" },
-  { name: "Community Pharmacy Palghar", type: "Pharmacy", distance: "4.2 km", status: "Open" },
-  { name: "Community Health Camp", type: "NGO Camp", distance: "2.0 km", status: "28 Sep" },
-  { name: "Sub-Centre Kasa", type: "Sub-Centre", distance: "6.8 km", status: "Limited" },
-];
-
 export default function BeneficiaryDashboard() {
   const { session } = useAuth();
-  const { appointments, referrals, medicines, reminders, notifications } = useApp();
-  const navigate = useNavigate();
+  const { appointments, referrals, medicines, reminders, notifications, facilities, beneficiaries } = useApp();
   const [medSearch, setMedSearch] = useState("");
 
-  const myAppointments = appointments.filter(a => a.beneficiaryId === "b1" && a.status === "scheduled");
-  const myReferrals = referrals.filter(r => r.beneficiaryId === "b1");
-  const myNotifications = notifications.filter(n => n.userId === "u1" && !n.isRead).slice(0, 4);
+  // Bridge: session.userId (u1) → beneficiary record (b1) by name match
+  const myBeneficiary = beneficiaries.find(b => b.name === session?.name);
+  const myBeneficiaryId = myBeneficiary?.id;
+
+  const myAppointments = appointments.filter(a => a.beneficiaryId === myBeneficiaryId && a.status === "scheduled").sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  const myReferrals = referrals.filter(r => r.beneficiaryId === myBeneficiaryId);
+  const myNotifications = notifications.filter(n => n.userId === session?.userId && !n.isRead).slice(0, 4);
   const filteredMeds = medicines.filter(m =>
     m.name.toLowerCase().includes(medSearch.toLowerCase()) ||
     m.genericName.toLowerCase().includes(medSearch.toLowerCase())
   ).slice(0, 4);
+
+  // Dynamic Care Timeline — reminders use status "active"/"sent" (not "pending")
+  const todayReminders = reminders.filter(r => r.beneficiaryId === myBeneficiaryId && (r.status === "active" || r.status === "sent")).slice(0, 2);
+
+  const careTimeline = [
+    {
+      date: "Today",
+      items: [
+        ...todayReminders.map(r => ({ time: r.dueTime ?? "—", text: `${r.title}: ${r.description}`, type: "medicine" })),
+        ...(myAppointments.length > 0 ? [{ time: myAppointments[0].time ?? formatTime(myAppointments[0].date), text: `Appointment: ${myAppointments[0].facilityName}`, type: "appointment" }] : [])
+      ]
+    },
+    {
+      date: "Upcoming",
+      items: myAppointments.slice(1, 3).map(a => ({ time: formatDate(a.date), text: `Visit: ${a.facilityName}`, type: "appointment" }))
+    }
+  ].filter(g => g.items.length > 0);
+
+  // Dynamic Nearby Services
+  const nearbyServices = facilities.slice(0, 5).map(f => ({
+    name: f.name,
+    type: f.type.replace("_", " "),
+    distance: (Math.random() * 8 + 1).toFixed(1) + " km",
+    status: f.operationalStatus === "operational" ? "Open" : "Limited"
+  }));
 
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
@@ -48,9 +62,9 @@ export default function BeneficiaryDashboard() {
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="flex items-start justify-between">
+      <div className="page-header">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">{greeting}, {session?.name?.split(" ")[0]} 👋</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-800">{greeting}, {session?.name?.split(" ")[0]} 👋</h1>
           <p className="text-slate-500 text-sm flex items-center gap-1 mt-1">
             <MapPin size={13} className="text-blue-400" />
             Palghar, Maharashtra
@@ -62,11 +76,11 @@ export default function BeneficiaryDashboard() {
       </div>
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard title="Upcoming Appointment" value={myAppointments.length > 0 ? formatDate(myAppointments[0].date) : "None"} icon={<Calendar size={20} className="text-blue-600" />} iconBg="bg-blue-100" subtitle={myAppointments[0]?.facilityName || ""} />
-        <StatCard title="Medicine Reminders" value="2 Today" icon={<Pill size={20} className="text-purple-600" />} iconBg="bg-purple-100" subtitle="Next: 8:00 AM" />
-        <StatCard title="Active Referrals" value={myReferrals.filter(r => r.status !== "completed").length} icon={<Send size={20} className="text-amber-600" />} iconBg="bg-amber-100" />
-        <StatCard title="Unread Notifications" value={myNotifications.length} icon={<Bell size={20} className="text-red-500" />} iconBg="bg-red-100" />
+      <div className="stat-grid">
+        <StatCard title="Upcoming" value={myAppointments.length > 0 ? formatDate(myAppointments[0].date) : "None"} icon={<Calendar size={20} className="text-blue-600" />} iconBg="bg-blue-100" subtitle={myAppointments[0]?.facilityName || ""} />
+        <StatCard title="Reminders" value={`${todayReminders.length} Today`} icon={<Pill size={20} className="text-purple-600" />} iconBg="bg-purple-100" subtitle={todayReminders.length > 0 ? `Next: ${todayReminders[0].dueTime ?? "—"}` : "All caught up"} />
+        <StatCard title="Active Referrals" value={myReferrals.filter(r => r.status !== "completed").length.toString()} icon={<Send size={20} className="text-amber-600" />} iconBg="bg-amber-100" />
+        <StatCard title="Notifications" value={myNotifications.length.toString()} icon={<Bell size={20} className="text-red-500" />} iconBg="bg-red-100" />
       </div>
 
       {/* Quick Actions */}
@@ -91,7 +105,9 @@ export default function BeneficiaryDashboard() {
               <Link to="/beneficiary/reminders" className="text-xs text-blue-600 hover:underline">View all</Link>
             </div>
             <div className="px-5 py-4 space-y-4">
-              {CARE_TIMELINE.map((group) => (
+              {careTimeline.length === 0 ? (
+                <EmptyState title="No scheduled care" description="You have no upcoming appointments or reminders." />
+              ) : careTimeline.map((group) => (
                 <div key={group.date}>
                   <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">{group.date}</p>
                   {group.items.map((item, i) => (
@@ -119,18 +135,20 @@ export default function BeneficiaryDashboard() {
               <Link to="/beneficiary/find-healthcare" className="text-xs text-blue-600 hover:underline">View map</Link>
             </div>
             <div className="divide-y divide-slate-50">
-              {NEARBY_SERVICES.map((s) => (
+              {nearbyServices.length === 0 ? (
+                <EmptyState title="No services found" description="Cannot locate nearby healthcare facilities." />
+              ) : nearbyServices.map((s) => (
                 <div key={s.name} className="px-5 py-3 hover:bg-blue-50/40 transition-colors">
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <p className="text-xs font-semibold text-slate-700">{s.name}</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-[10px] text-slate-500">{s.type}</span>
+                        <span className="text-[10px] text-slate-500 capitalize">{s.type}</span>
                         <span className="text-[10px] text-slate-400">·</span>
                         <span className="text-[10px] text-slate-500 flex items-center gap-0.5"><MapPin size={8} />{s.distance}</span>
                       </div>
                     </div>
-                    <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${s.status === "Open" ? "bg-emerald-50 text-emerald-700" : s.status === "Limited" ? "bg-amber-50 text-amber-700" : "bg-blue-50 text-blue-700"}`}>
+                    <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${s.status === "Open" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>
                       {s.status}
                     </span>
                   </div>

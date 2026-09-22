@@ -48,9 +48,9 @@ export default function DoctorDashboard() {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-start justify-between">
+      <div className="page-header">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Doctor Dashboard</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-800">Doctor Dashboard</h1>
           <p className="text-slate-500 text-sm mt-1">Dr. Vikram Singh · PHC Palghar, Maharashtra</p>
         </div>
         <div className="px-3 py-1.5 bg-blue-50 border border-blue-200 rounded-lg text-xs text-blue-700 font-medium">
@@ -59,9 +59,9 @@ export default function DoctorDashboard() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="stat-grid">
         <StatCard title="Pending Referrals" value={pendingReferrals.length} icon={<Send size={20} className="text-red-500" />} iconBg="bg-red-100" change="Needs review" changeType="down" />
-        <StatCard title="Today's Appointments" value={todayAppts.length} icon={<Calendar size={20} className="text-blue-600" />} iconBg="bg-blue-100" />
+        <StatCard title="Appointments" value={todayAppts.length} icon={<Calendar size={20} className="text-blue-600" />} iconBg="bg-blue-100" />
         <StatCard title="Follow-ups Due" value={acceptedReferrals.length} icon={<Clock size={20} className="text-amber-600" />} iconBg="bg-amber-100" />
         <StatCard title="High Priority" value={highPriority.length} icon={<AlertTriangle size={20} className="text-red-500" />} iconBg="bg-red-100" />
       </div>

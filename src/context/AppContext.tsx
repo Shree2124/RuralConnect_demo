@@ -91,7 +91,7 @@ function loadState() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) return JSON.parse(stored);
-  } catch {}
+  } catch { }
   return null;
 }
 
@@ -111,24 +111,31 @@ function saveState(state: Partial<AppContextType>) {
       users: state.users,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
-  } catch {}
+  } catch { }
 }
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const stored = loadState();
 
-  const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>(stored?.beneficiaries || MOCK_BENEFICIARIES);
-  const [cases, setCases] = useState<HealthCase[]>(stored?.cases || MOCK_CASES);
-  const [referrals, setReferrals] = useState<Referral[]>(stored?.referrals || MOCK_REFERRALS);
+  const mergeMock = <T extends { id: string }>(storedArr: T[] | undefined, mockArr: T[]) => {
+    if (!storedArr) return mockArr;
+    const storedIds = new Set(storedArr.map(item => item.id));
+    const newItems = mockArr.filter(item => !storedIds.has(item.id));
+    return [...storedArr, ...newItems];
+  };
+
+  const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>(mergeMock(stored?.beneficiaries, MOCK_BENEFICIARIES));
+  const [cases, setCases] = useState<HealthCase[]>(mergeMock(stored?.cases, MOCK_CASES));
+  const [referrals, setReferrals] = useState<Referral[]>(mergeMock(stored?.referrals, MOCK_REFERRALS));
   const [medicines] = useState<Medicine[]>(MOCK_MEDICINES);
-  const [inventory, setInventory] = useState<InventoryItem[]>(stored?.inventory || MOCK_INVENTORY);
-  const [appointments, setAppointments] = useState<Appointment[]>(stored?.appointments || MOCK_APPOINTMENTS);
+  const [inventory, setInventory] = useState<InventoryItem[]>(mergeMock(stored?.inventory, MOCK_INVENTORY));
+  const [appointments, setAppointments] = useState<Appointment[]>(mergeMock(stored?.appointments, MOCK_APPOINTMENTS));
   const [reminders] = useState<Reminder[]>(MOCK_REMINDERS);
-  const [notifications, setNotifications] = useState<Notification[]>(stored?.notifications || MOCK_NOTIFICATIONS);
-  const [healthCamps, setHealthCamps] = useState<HealthCamp[]>(stored?.healthCamps || MOCK_HEALTH_CAMPS);
-  const [syncQueue, setSyncQueue] = useState<SyncRecord[]>(stored?.syncQueue || MOCK_SYNC_RECORDS);
+  const [notifications, setNotifications] = useState<Notification[]>(mergeMock(stored?.notifications, MOCK_NOTIFICATIONS));
+  const [healthCamps, setHealthCamps] = useState<HealthCamp[]>(mergeMock(stored?.healthCamps, MOCK_HEALTH_CAMPS));
+  const [syncQueue, setSyncQueue] = useState<SyncRecord[]>(mergeMock(stored?.syncQueue, MOCK_SYNC_RECORDS));
   const [auditLogs, setAuditLogs] = useState<AuditLog[]>(MOCK_AUDIT_LOGS);
-  const [users, setUsers] = useState<User[]>(stored?.users || MOCK_USERS);
+  const [users, setUsers] = useState<User[]>(mergeMock(stored?.users, MOCK_USERS));
   const [facilities] = useState<HealthcareFacility[]>(MOCK_FACILITIES);
   const [ngos] = useState<NGO[]>(MOCK_NGOS);
   const [offlineMode, setOfflineModeState] = useState<boolean>(stored?.offlineMode || false);
@@ -163,7 +170,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const addBeneficiary = useCallback((b: Omit<Beneficiary, "id" | "registeredAt">): Beneficiary => {
     const newB: Beneficiary = { ...b, id: generateId(), registeredAt: new Date().toISOString() };
     if (offlineMode) {
-      setSyncQueue((prev) => [...prev, { id: generateId(), type: "beneficiary", data: newB as Record<string, unknown>, createdOfflineAt: new Date().toISOString(), status: "pending" }]);
+      setSyncQueue((prev) => [...prev, { id: generateId(), type: "beneficiary", data: newB as unknown as Record<string, unknown>, createdOfflineAt: new Date().toISOString(), status: "pending" }]);
     }
     setBeneficiaries((prev) => [newB, ...prev]);
     return newB;
@@ -177,7 +184,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const now = new Date().toISOString();
     const newC: HealthCase = { ...c, id: generateId(), createdAt: now, updatedAt: now, isOffline: offlineMode };
     if (offlineMode) {
-      setSyncQueue((prev) => [...prev, { id: generateId(), type: "case", data: newC as Record<string, unknown>, createdOfflineAt: now, status: "pending" }]);
+      setSyncQueue((prev) => [...prev, { id: generateId(), type: "case", data: newC as unknown as Record<string, unknown>, createdOfflineAt: now, status: "pending" }]);
     }
     setCases((prev) => [newC, ...prev]);
     return newC;
@@ -190,7 +197,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const addReferral = useCallback((r: Omit<Referral, "id" | "createdAt">): Referral => {
     const newR: Referral = { ...r, id: generateId(), createdAt: new Date().toISOString() };
     if (offlineMode) {
-      setSyncQueue((prev) => [...prev, { id: generateId(), type: "referral", data: newR as Record<string, unknown>, createdOfflineAt: new Date().toISOString(), status: "pending" }]);
+      setSyncQueue((prev) => [...prev, { id: generateId(), type: "referral", data: newR as unknown as Record<string, unknown>, createdOfflineAt: new Date().toISOString(), status: "pending" }]);
     }
     setReferrals((prev) => [newR, ...prev]);
     return newR;

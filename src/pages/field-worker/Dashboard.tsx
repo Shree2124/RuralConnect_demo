@@ -35,13 +35,10 @@ export default function FieldWorkerDashboard() {
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="flex items-start justify-between">
+      <div className="page-header">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Field Operations</h1>
-          <p className="text-slate-500 text-sm flex items-center gap-1 mt-1">
-            <MapPin size={13} className="text-blue-400" />
-            Palghar District, Maharashtra · {session?.name}
-          </p>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-800">Field Worker Dashboard</h1>
+          <p className="text-slate-500 text-sm mt-1">{session?.name} · Seva Health NGO, Palghar</p>
         </div>
         <Button variant="primary" size="sm" onClick={() => navigate("/field-worker/beneficiaries")}>
           <UserPlus size={14} />
@@ -50,11 +47,11 @@ export default function FieldWorkerDashboard() {
       </div>
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        <StatCard title="Assigned Beneficiaries" value={myBeneficiaries.length} icon={<Users size={20} className="text-blue-600" />} iconBg="bg-blue-100" />
-        <StatCard title="Pending Cases" value={pendingCases.length} icon={<ClipboardList size={20} className="text-amber-600" />} iconBg="bg-amber-100" />
+      <div className="stat-grid">
+        <StatCard title="My Families" value={myBeneficiaries.length} icon={<Users size={20} className="text-blue-600" />} iconBg="bg-blue-100" />
+        <StatCard title="Offline Drafts" value={offlineDrafts} icon={<WifiOff size={20} className="text-amber-600" />} iconBg="bg-amber-100" />
         <StatCard title="Pending Sync" value={pendingSyncCount} icon={<RefreshCw size={20} className="text-purple-600" />} iconBg="bg-purple-100" change={pendingSyncCount > 0 ? "Needs sync" : "All synced"} changeType={pendingSyncCount > 0 ? "down" : "up"} />
-        <StatCard title="Today's Visits" value="3" icon={<MapPin size={20} className="text-teal-600" />} iconBg="bg-teal-100" />
+        <StatCard title="Today's Visits" value={Math.min(myBeneficiaries.length, Math.floor(Math.random() * 5) + 1)} icon={<MapPin size={20} className="text-teal-600" />} iconBg="bg-teal-100" />
         <StatCard title="High Priority" value={highPriority.length} icon={<AlertTriangle size={20} className="text-red-500" />} iconBg="bg-red-100" />
       </div>
 

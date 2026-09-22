@@ -31,6 +31,9 @@ export const MOCK_USERS: User[] = [
   { id: "u8", name: "Raju Pawar", email: "raju.pawar@ruralconnect.in", mobile: "9109876543", role: "field_worker", state: "Maharashtra", district: "Nandurbar", organization: "Seva Health NGO", assignedDistrict: "Nandurbar", assignedVillages: ["Akkalkuwa", "Akrani", "Taloda"], lastSync: "2026-09-08T07:30:00", deviceStatus: "online", status: "active", lastActive: "2026-09-08T07:30:00", createdAt: "2026-02-05T00:00:00" },
   { id: "u9", name: "Dr. Rekha Nair", email: "rekha.nair@ruralconnect.in", mobile: "9098765432", role: "doctor", state: "Maharashtra", district: "Gadchiroli", organization: "CHC Gadchiroli", status: "active", lastActive: "2026-09-08T08:00:00", createdAt: "2026-01-15T00:00:00" },
   { id: "u10", name: "Mohan Rathod", email: "mohan.rathod@ruralconnect.in", mobile: "8987654321", role: "pharmacy", state: "Rajasthan", district: "Barmer", organization: "Jan Aushadhi Kendra Barmer", status: "active", lastActive: "2026-09-08T09:20:00", createdAt: "2026-03-01T00:00:00" },
+  { id: "u11", name: "Suresh Gupta", email: "suresh.admin@ruralconnect.in", mobile: "9988776655", role: "admin", state: "Maharashtra", district: "Mumbai", status: "active", lastActive: "2026-09-08T10:15:00", createdAt: "2025-08-10T00:00:00" },
+  { id: "u12", name: "Riya Sen", email: "riya.super@ruralconnect.in", mobile: "9887766554", role: "admin", state: "Delhi", district: "New Delhi", status: "active", lastActive: "2026-09-08T11:00:00", createdAt: "2024-05-20T00:00:00" },
+  { id: "u13", name: "Manoj Tiwari", email: "manoj.sysadmin@ruralconnect.in", mobile: "9776655443", role: "admin", state: "Rajasthan", district: "Jaipur", status: "active", lastActive: "2026-09-08T09:45:00", createdAt: "2025-11-11T00:00:00" }
 ];
 
 // ============================
@@ -67,6 +70,11 @@ export const MOCK_BENEFICIARIES: Beneficiary[] = [
   { id: "b28", name: "Tara Chand Bhil", age: 34, gender: "male", mobile: "8700000026", state: "Madhya Pradesh", district: "Shivpuri", village: "Pichhore", pinCode: "473995", registeredAt: "2026-06-01T00:00:00", status: "active" },
   { id: "b29", name: "Sarita Devi", age: 43, gender: "female", mobile: "8600000027", state: "Himachal Pradesh", district: "Kinnaur", village: "Reckong Peo", pinCode: "172107", registeredAt: "2026-07-28T00:00:00", status: "active" },
   { id: "b30", name: "Ghanshyam Rawat", age: 61, gender: "male", mobile: "8500000028", state: "Uttar Pradesh", district: "Lakhimpur Kheri", village: "Pallia", pinCode: "262902", registeredAt: "2026-03-08T00:00:00", status: "active" },
+  { id: "b31", name: "Rita Verma", age: 29, gender: "female", mobile: "9100000030", state: "Maharashtra", district: "Palghar", village: "Safale", pinCode: "401404", registeredAt: "2026-09-01T00:00:00", status: "active", symptoms: ["cough", "fever"] },
+  { id: "b32", name: "Anil Kapoor", age: 45, gender: "male", mobile: "9100000031", state: "Maharashtra", district: "Palghar", village: "Kasa", pinCode: "401405", registeredAt: "2026-09-05T00:00:00", status: "referred" },
+  { id: "b33", name: "Suman Patel", age: 34, gender: "female", mobile: "9100000032", state: "Rajasthan", district: "Barmer", village: "Ramsar", pinCode: "344001", registeredAt: "2026-08-15T00:00:00", status: "active" },
+  { id: "b34", name: "Jatin Das", age: 50, gender: "male", mobile: "9100000033", state: "Odisha", district: "Koraput", village: "Jeypore", pinCode: "764001", registeredAt: "2026-07-20T00:00:00", status: "closed" },
+  { id: "b35", name: "Kiran Bedi", age: 40, gender: "female", mobile: "9100000034", state: "Maharashtra", district: "Gadchiroli", village: "Etapalli", pinCode: "442702", registeredAt: "2026-09-02T00:00:00", status: "active" }
 ];
 
 // ============================
@@ -81,6 +89,10 @@ export const MOCK_CASES: HealthCase[] = [
   { id: "c6", beneficiaryId: "b3", beneficiaryName: "Asha Shinde", village: "Akkalkuwa", district: "Nandurbar", state: "Maharashtra", symptoms: ["cough", "fever", "difficulty breathing"], severity: "high", status: "referred", createdBy: "u8", createdAt: "2026-09-03T09:00:00", updatedAt: "2026-09-04T10:00:00", referralId: "r4", isOffline: false },
   { id: "c7", beneficiaryId: "b6", beneficiaryName: "Dinesh Jagtap", village: "Talasari", district: "Palghar", state: "Maharashtra", symptoms: ["injury", "pain"], severity: "moderate", status: "closed", createdBy: "u2", createdAt: "2026-08-28T10:00:00", updatedAt: "2026-08-30T12:00:00" },
   { id: "c8", beneficiaryId: "b12", beneficiaryName: "Rahul Gond", village: "Etapalli", district: "Gadchiroli", state: "Maharashtra", symptoms: ["fever", "malaria-like symptoms"], severity: "high", status: "open", createdBy: "u2", createdAt: "2026-09-08T08:00:00", updatedAt: "2026-09-08T08:00:00", isOffline: true, notes: "Saved offline — pending sync" },
+  { id: "c9", beneficiaryId: "b31", beneficiaryName: "Rita Verma", village: "Safale", district: "Palghar", state: "Maharashtra", symptoms: ["fever", "cough"], severity: "low", status: "open", createdBy: "u2", createdAt: "2026-09-08T09:00:00", updatedAt: "2026-09-08T09:00:00" },
+  { id: "c10", beneficiaryId: "b32", beneficiaryName: "Anil Kapoor", village: "Kasa", district: "Palghar", state: "Maharashtra", symptoms: ["chest pain"], severity: "high", status: "referred", createdBy: "u2", createdAt: "2026-09-07T10:00:00", updatedAt: "2026-09-07T10:30:00", referralId: "r9" },
+  { id: "c11", beneficiaryId: "b33", beneficiaryName: "Suman Patel", village: "Ramsar", district: "Barmer", state: "Rajasthan", symptoms: ["vomiting", "fever"], severity: "moderate", status: "closed", createdBy: "u7", createdAt: "2026-09-01T10:00:00", updatedAt: "2026-09-03T10:30:00" },
+  { id: "c12", beneficiaryId: "b35", beneficiaryName: "Kiran Bedi", village: "Etapalli", district: "Gadchiroli", state: "Maharashtra", symptoms: ["headache"], severity: "low", status: "open", createdBy: "u2", createdAt: "2026-09-08T11:00:00", updatedAt: "2026-09-08T11:00:00" }
 ];
 
 // ============================
@@ -97,6 +109,10 @@ export const MOCK_REFERRALS: Referral[] = [
   { id: "r7", caseId: "c4", beneficiaryId: "b5", beneficiaryName: "Kavita Jadhav", fromWorkerId: "u2", toFacilityId: "hf5", toFacilityName: "Sub-Centre Chamorshi", priority: "low", reason: "Fever monitoring", symptoms: ["fever", "body ache"], status: "pending", createdAt: "2026-09-07T12:00:00", district: "Gadchiroli", state: "Maharashtra" },
   // Offline-created referral
   { id: "r8", caseId: "c8", beneficiaryId: "b12", beneficiaryName: "Rahul Gond", fromWorkerId: "u2", toFacilityId: "hf2", toFacilityName: "CHC Gadchiroli", priority: "high", reason: "Suspected malaria — urgent lab test required", symptoms: ["fever", "malaria-like symptoms"], status: "pending", createdAt: "2026-09-08T08:30:00", district: "Gadchiroli", state: "Maharashtra", notes: "Created offline — pending sync" },
+  { id: "r9", caseId: "c10", beneficiaryId: "b32", beneficiaryName: "Anil Kapoor", fromWorkerId: "u2", toFacilityId: "hf1", toFacilityName: "PHC Palghar", priority: "high", reason: "Severe chest pain", symptoms: ["chest pain"], status: "pending", createdAt: "2026-09-07T10:15:00", district: "Palghar", state: "Maharashtra" },
+  { id: "r10", caseId: "c11", beneficiaryId: "b33", beneficiaryName: "Suman Patel", fromWorkerId: "u7", toFacilityId: "hf3", toFacilityName: "District Hospital Barmer", priority: "moderate", reason: "Vomiting and fever", symptoms: ["vomiting", "fever"], status: "completed", createdAt: "2026-09-01T10:15:00", completedAt: "2026-09-03T10:00:00", district: "Barmer", state: "Rajasthan" },
+  { id: "r11", caseId: "c1", beneficiaryId: "b1", beneficiaryName: "Meena Patil", fromWorkerId: "u4", toFacilityId: "hf13", toFacilityName: "District Hospital Gadchiroli", toDoctorId: "u8", toDoctorName: "Dr. Arun Sharma", priority: "moderate", reason: "Specialist consultation for prolonged fever", symptoms: ["fever", "fatigue"], status: "accepted", createdAt: "2026-08-15T09:00:00", scheduledDate: "2026-08-18T10:30:00", district: "Gadchiroli", state: "Maharashtra" },
+  { id: "r12", caseId: "c1", beneficiaryId: "b1", beneficiaryName: "Meena Patil", fromWorkerId: "u2", toFacilityId: "hf6", toFacilityName: "Ayushman Arogya Mandir Safale", priority: "low", reason: "Routine wellness check", symptoms: [], status: "completed", createdAt: "2026-07-10T09:00:00", completedAt: "2026-07-12T14:00:00", district: "Palghar", state: "Maharashtra" }
 ];
 
 // ============================
@@ -118,6 +134,9 @@ export const MOCK_MEDICINES: Medicine[] = [
   { id: "m13", name: "Antacid Suspension", genericName: "Magnesium Hydroxide + Aluminium Hydroxide", category: "Antacid", stockStatus: "available", quantity: 60, providerId: "ph5", providerName: "Health Plus Pharmacy", providerType: "pharmacy", location: "Dahod, Gujarat", district: "Dahod", state: "Gujarat", distance: 5.5, price: 42, lastUpdated: "2026-09-08T09:00:00" },
   { id: "m14", name: "Salbutamol Inhaler", genericName: "Salbutamol Sulphate", category: "Bronchodilator", stockStatus: "low_stock", quantity: 8, providerId: "ph3", providerName: "Mahaveer Medical Store", providerType: "pharmacy", location: "Nashik, Maharashtra", district: "Nashik", state: "Maharashtra", distance: 12.0, price: 95, lastUpdated: "2026-09-07T10:00:00" },
   { id: "m15", name: "Ciprofloxacin 500mg", genericName: "Ciprofloxacin HCl", category: "Antibiotic", stockStatus: "available", quantity: 90, providerId: "ph1", providerName: "Community Pharmacy Palghar", providerType: "pharmacy", location: "Palghar, Maharashtra", district: "Palghar", state: "Maharashtra", distance: 4.2, price: 55, lastUpdated: "2026-09-08T07:00:00" },
+  { id: "m16", name: "Ibuprofen 400mg", genericName: "Ibuprofen", category: "NSAID", stockStatus: "available", quantity: 150, providerId: "ph1", providerName: "Community Pharmacy Palghar", providerType: "pharmacy", location: "Palghar, Maharashtra", district: "Palghar", state: "Maharashtra", distance: 4.2, price: 15, lastUpdated: "2026-09-08T07:00:00", batchNumber: "B2026IBU01", expiryDate: "2027-08-30" },
+  { id: "m17", name: "Omeprazole 20mg", genericName: "Omeprazole", category: "Antacid", stockStatus: "low_stock", quantity: 10, providerId: "ph1", providerName: "Community Pharmacy Palghar", providerType: "pharmacy", location: "Palghar, Maharashtra", district: "Palghar", state: "Maharashtra", distance: 4.2, price: 25, lastUpdated: "2026-09-08T07:00:00", batchNumber: "B2026OMZ01", expiryDate: "2027-10-31" },
+  { id: "m18", name: "Cetirizine 10mg", genericName: "Cetirizine HCl", category: "Antihistamine", stockStatus: "available", quantity: 200, providerId: "ph1", providerName: "Community Pharmacy Palghar", providerType: "pharmacy", location: "Palghar, Maharashtra", district: "Palghar", state: "Maharashtra", distance: 4.2, price: 10, lastUpdated: "2026-09-08T07:00:00", batchNumber: "B2026CET01", expiryDate: "2028-01-31" }
 ];
 
 // ============================
@@ -134,6 +153,9 @@ export const MOCK_INVENTORY: InventoryItem[] = [
   { id: "i8", name: "Salbutamol Inhaler", genericName: "Salbutamol", category: "Respiratory", batchNumber: "B2026SAL01", quantity: 8, expiryDate: "2027-08-31", location: "Nashik Store", district: "Nashik", state: "Maharashtra", status: "low_stock", providerId: "ph3", updatedAt: "2026-09-07T10:00:00", price: 95 },
   { id: "i9", name: "Metformin 500mg", genericName: "Metformin HCl", category: "Antidiabetic", batchNumber: "B2026MET01", quantity: 80, expiryDate: "2027-09-30", location: "Barmer Store", district: "Barmer", state: "Rajasthan", status: "available", providerId: "ph2", updatedAt: "2026-09-07T14:00:00", price: 22 },
   { id: "i10", name: "Ciprofloxacin 500mg", genericName: "Ciprofloxacin HCl", category: "Antibiotic", batchNumber: "B2026CIP01", quantity: 90, expiryDate: "2027-05-31", location: "Palghar Store", district: "Palghar", state: "Maharashtra", status: "available", providerId: "ph1", updatedAt: "2026-09-08T07:00:00", price: 55 },
+  { id: "i11", name: "Ibuprofen 400mg", genericName: "Ibuprofen", category: "NSAID", batchNumber: "B2026IBU01", quantity: 150, expiryDate: "2027-08-30", location: "Palghar Store", district: "Palghar", state: "Maharashtra", status: "available", providerId: "ph1", updatedAt: "2026-09-08T07:00:00", price: 15 },
+  { id: "i12", name: "Omeprazole 20mg", genericName: "Omeprazole", category: "Antacid", batchNumber: "B2026OMZ01", quantity: 10, expiryDate: "2027-10-31", location: "Palghar Store", district: "Palghar", state: "Maharashtra", status: "low_stock", providerId: "ph1", updatedAt: "2026-09-08T07:00:00", price: 25 },
+  { id: "i13", name: "Cetirizine 10mg", genericName: "Cetirizine HCl", category: "Antihistamine", batchNumber: "B2026CET01", quantity: 200, expiryDate: "2028-01-31", location: "Palghar Store", district: "Palghar", state: "Maharashtra", status: "available", providerId: "ph1", updatedAt: "2026-09-08T07:00:00", price: 10 }
 ];
 
 // ============================
@@ -148,6 +170,12 @@ export const MOCK_APPOINTMENTS: Appointment[] = [
   { id: "ap6", beneficiaryId: "b1", beneficiaryName: "Meena Patil", facilityId: "hf6", facilityName: "Ayushman Arogya Mandir Safale", type: "vaccination", date: "2026-09-15", time: "08:00 AM", status: "scheduled", notes: "Tetanus booster", district: "Palghar", state: "Maharashtra" },
   { id: "ap7", beneficiaryId: "b6", beneficiaryName: "Dinesh Jagtap", doctorId: "u4", doctorName: "Dr. Vikram Singh", facilityId: "hf1", facilityName: "PHC Palghar", type: "follow_up", date: "2026-08-30", time: "10:00 AM", status: "completed", district: "Palghar", state: "Maharashtra" },
   { id: "ap8", beneficiaryId: "b7", beneficiaryName: "Pushpa Bai", facilityId: "hf4", facilityName: "Ayushman Arogya Mandir Dhorimanna", type: "consultation", date: "2026-09-12", time: "11:00 AM", status: "scheduled", district: "Barmer", state: "Rajasthan" },
+  { id: "ap9", beneficiaryId: "b31", beneficiaryName: "Rita Verma", facilityId: "hf1", facilityName: "PHC Palghar", type: "consultation", date: "2026-09-11", time: "09:00 AM", status: "scheduled", district: "Palghar", state: "Maharashtra" },
+  { id: "ap10", beneficiaryId: "b32", beneficiaryName: "Anil Kapoor", doctorId: "u4", doctorName: "Dr. Vikram Singh", facilityId: "hf1", facilityName: "PHC Palghar", type: "referral", date: "2026-09-08", time: "02:00 PM", status: "completed", district: "Palghar", state: "Maharashtra" },
+  { id: "ap11", beneficiaryId: "b1", beneficiaryName: "Meena Patil", doctorId: "u4", doctorName: "Dr. Vikram Singh", facilityId: "hf1", facilityName: "PHC Palghar", type: "consultation", date: "2026-08-15", time: "11:00 AM", status: "completed", district: "Palghar", state: "Maharashtra" },
+  { id: "ap12", beneficiaryId: "b1", beneficiaryName: "Meena Patil", facilityId: "hf6", facilityName: "Ayushman Arogya Mandir Safale", type: "vaccination", date: "2026-07-12", time: "10:30 AM", status: "completed", notes: "Routine Immunization", district: "Palghar", state: "Maharashtra" },
+  { id: "ap13", beneficiaryId: "b1", beneficiaryName: "Meena Patil", facilityId: "hf13", facilityName: "District Hospital Gadchiroli", doctorId: "u8", doctorName: "Dr. Arun Sharma", type: "referral", date: "2026-08-18", time: "10:30 AM", status: "completed", district: "Gadchiroli", state: "Maharashtra" },
+  { id: "ap14", beneficiaryId: "b1", beneficiaryName: "Meena Patil", facilityId: "hf11", facilityName: "Community Pharmacy Palghar", type: "consultation", date: "2026-09-01", time: "09:00 AM", status: "cancelled", district: "Palghar", state: "Maharashtra" }
 ];
 
 // ============================
@@ -185,6 +213,9 @@ export const MOCK_NOTIFICATIONS: Notification[] = [
   { id: "n18", userId: "u1", title: "Medicine Reminder", message: "Time to take your Paracetamol 500mg — 1 tablet after breakfast.", category: "medicine", isRead: false, createdAt: "2026-09-08T08:00:00" },
   { id: "n19", userId: "u6", title: "Audit: Doctor accepted referral", message: "Dr. Vikram Singh accepted referral for Asha Shinde.", category: "system", isRead: true, createdAt: "2026-09-04T10:30:00" },
   { id: "n20", userId: "u5", title: "Medicine Request", message: "Beneficiary requested Paracetamol 500mg — available in stock.", category: "medicine", isRead: false, createdAt: "2026-09-08T09:00:00" },
+  { id: "n21", userId: "u1", title: "Appointment Confirmed", message: "Your consultation with Dr. Vikram Singh is confirmed for 11 Sep, 09:00 AM.", category: "appointment", isRead: false, createdAt: "2026-09-08T09:30:00" },
+  { id: "n22", userId: "u2", title: "New Assignment", message: "You have been assigned to check up on Kiran Bedi in Etapalli.", category: "appointment", isRead: false, createdAt: "2026-09-08T10:00:00" },
+  { id: "n23", userId: "u4", title: "Lab Results Ready", message: "Lab results for Anil Kapoor are ready for review.", category: "system", isRead: false, createdAt: "2026-09-08T11:00:00" }
 ];
 
 // ============================
@@ -253,7 +284,10 @@ export const MOCK_SYNC_RECORDS: SyncRecord[] = [
 // AUDIT LOGS
 // ============================
 export const MOCK_AUDIT_LOGS: AuditLog[] = [
-  { id: "al1", timestamp: "2026-09-08T09:42:00", userId: "u2", userName: "Rajesh Kumar", userRole: "field_worker", action: "Created Beneficiary", resource: "Beneficiary", resourceId: "b12", status: "success", details: "Registered new beneficiary: Rahul Gond, Etapalli, Gadchiroli" },
+  { id: "al1", timestamp: "2026-09-08T11:05:00", userId: "u12", userName: "Riya Sen", userRole: "admin", action: "System Backup", resource: "System", status: "success", details: "Initiated manual full database backup" },
+  { id: "al2", timestamp: "2026-09-08T10:30:00", userId: "u11", userName: "Suresh Gupta", userRole: "admin", action: "Updated Permissions", resource: "Role", resourceId: "ngo_admin", status: "success", details: "Granted export data permissions to NGO admins" },
+  { id: "al3", timestamp: "2026-09-08T09:55:00", userId: "u13", userName: "Manoj Tiwari", userRole: "admin", action: "Generated Report", resource: "Analytics", status: "success", details: "Exported monthly state-wide health report" },
+  { id: "al4", timestamp: "2026-09-08T09:42:00", userId: "u2", userName: "Rajesh Kumar", userRole: "field_worker", action: "Created Beneficiary", resource: "Beneficiary", resourceId: "b12", status: "success", details: "Registered new beneficiary: Rahul Gond, Etapalli, Gadchiroli" },
   { id: "al2", timestamp: "2026-09-08T09:37:00", userId: "u5", userName: "Suresh Mehta", userRole: "pharmacy", action: "Updated Inventory", resource: "Inventory", resourceId: "i1", status: "success", details: "Updated Paracetamol 500mg stock: +50 units" },
   { id: "al3", timestamp: "2026-09-08T09:20:00", userId: "u4", userName: "Dr. Vikram Singh", userRole: "doctor", action: "Accepted Referral", resource: "Referral", resourceId: "r3", status: "success", details: "Accepted referral for Suresh Rathod — High priority case" },
   { id: "al4", timestamp: "2026-09-08T08:55:00", userId: "u3", userName: "Priya Sharma", userRole: "ngo_admin", action: "Created Health Camp", resource: "HealthCamp", resourceId: "hc1", status: "success", details: "Scheduled Community Health Camp for 28 Sep 2026 at Palghar" },

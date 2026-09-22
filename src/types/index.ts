@@ -172,6 +172,7 @@ export interface Notification {
 }
 
 export interface HealthcareFacility {
+  operationalStatus: string;
   id: string;
   name: string;
   type: "phc" | "chc" | "district_hospital" | "sub_centre" | "arogya_mandir" | "ngo_camp" | "pharmacy" | "private_clinic";

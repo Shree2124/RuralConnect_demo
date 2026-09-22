@@ -4,6 +4,7 @@ import { Toaster } from "react-hot-toast";
 
 import { ProtectedRoute } from "./router/ProtectedRoute";
 import { DashboardLayout } from "./components/layout/DashboardLayout";
+import { UX4GBar } from "./components/layout/UX4GBar";
 
 // Pages
 import Landing from "./pages/Landing";
@@ -40,7 +41,8 @@ import {
 
 export default function App() {
   return (
-    <>
+    <div id="main-content" className="min-h-screen flex flex-col">
+      <UX4GBar />
       <Toaster position="top-center" toastOptions={{ duration: 3000, style: { fontSize: "14px", borderRadius: "8px" } }} />
       <Routes>
         <Route path="/" element={<Landing />} />
@@ -123,6 +125,6 @@ export default function App() {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </>
+    </div>
   );
 }

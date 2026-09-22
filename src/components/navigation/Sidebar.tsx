@@ -112,9 +112,10 @@ const ROLE_COLORS: Record<UserRole, string> = {
 interface SidebarProps {
   collapsed: boolean;
   onToggle: () => void;
+  onMobileClose?: () => void;
 }
 
-export function Sidebar({ collapsed, onToggle }: SidebarProps) {
+export function Sidebar({ collapsed, onToggle, onMobileClose }: SidebarProps) {
   const { session, logout } = useAuth();
   const { pendingSyncCount, notifications } = useApp();
   const navigate = useNavigate();
@@ -131,7 +132,8 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
 
   return (
     <aside className={cn(
-      "flex flex-col h-screen bg-white border-r border-blue-50 shadow-sm transition-all duration-300 fixed left-0 top-0 z-40",
+      "flex flex-col bg-white border-r border-blue-50 shadow-sm transition-all duration-300 fixed left-0 top-7 z-40",
+      "h-[calc(100vh-28px)]",
       collapsed ? "w-16" : "w-64"
     )}>
       {/* Header */}
@@ -175,6 +177,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           <NavLink
             key={item.to}
             to={item.to}
+            onClick={onMobileClose}
             className={({ isActive }) => cn(
               "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group relative",
               collapsed ? "justify-center" : "",

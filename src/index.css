@@ -1,3 +1,5 @@
+@import "leaflet/dist/leaflet.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -134,12 +136,17 @@
     @apply w-full text-sm;
   }
 
+  /* Responsive table wrapper — always horizontal scroll on small screens */
+  .rc-table-wrap {
+    @apply w-full overflow-x-auto -mx-0;
+  }
+
   .rc-table th {
-    @apply px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide bg-slate-50 border-b border-slate-100;
+    @apply px-3 sm:px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide bg-slate-50 border-b border-slate-100 whitespace-nowrap;
   }
 
   .rc-table td {
-    @apply px-4 py-3 text-slate-700 border-b border-slate-50;
+    @apply px-3 sm:px-4 py-3 text-slate-700 border-b border-slate-50;
   }
 
   .rc-table tr:hover td {
@@ -235,13 +242,72 @@
   }
 
   /* Priority */
-  .priority-high {
-    @apply badge-red;
+  .priority-high { @apply badge-red; }
+  .priority-medium { @apply badge-yellow; }
+  .priority-low { @apply badge-green; }
+
+  /* Responsive page header */
+  .page-header {
+    @apply flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5;
   }
-  .priority-medium {
-    @apply badge-yellow;
+
+  /* Stat grid — 2 cols mobile, 4 cols desktop */
+  .stat-grid {
+    @apply grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4;
   }
-  .priority-low {
-    @apply badge-green;
+
+  /* Card grid 2 col */
+  .card-grid-2 {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
+  }
+
+  /* Card grid 3 col */
+  .card-grid-3 {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4;
+  }
+
+  /* Overflow x-auto wrapper for tables on small screens */
+  .table-responsive {
+    @apply w-full overflow-x-auto rounded-xl;
+  }
+
+  /* Touch-friendly min tap target */
+  .tap-target {
+    @apply min-h-[44px] min-w-[44px];
   }
 }
+
+/* UX4G Accessibility Classes */
+html.text-sm-global {
+  font-size: 14px !important;
+}
+
+html.text-normal-global {
+  font-size: 16px !important;
+}
+
+html.text-lg-global {
+  font-size: 18px !important;
+}
+
+html.high-contrast {
+  filter: contrast(1.5) grayscale(0.5);
+  background-color: #000;
+  color: #fff;
+}
+
+html.highlight-links a {
+  background-color: #ffeb3b !important;
+  color: #000 !important;
+  text-decoration: underline !important;
+  font-weight: bold !important;
+}
+
+html.hide-images img {
+  visibility: hidden !important;
+}
+
+html.big-cursor * {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="black" stroke="white" stroke-width="2"><path d="M5 3l14 14-6 1.5-3 5-3-5-6-1.5z"/></svg>'), auto !important;
+}
+

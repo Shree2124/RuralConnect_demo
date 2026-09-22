@@ -4,6 +4,7 @@ import { useApp } from "../context/AppContext";
 import { Card, Button, Select, Badge } from "../components/ui";
 import { cn } from "../lib/utils";
 import type { HealthcareFacility } from "../types";
+import "leaflet/dist/leaflet.css";
 
 // Dynamic import for Leaflet
 let L: any = null;
@@ -55,6 +56,15 @@ export default function AccessibilityMap() {
         iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
         shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
       });
+      // Ensure CSS is loaded natively
+      if (!document.getElementById("leaflet-css")) {
+        const link = document.createElement("link");
+        link.id = "leaflet-css";
+        link.rel = "stylesheet";
+        link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+        document.head.appendChild(link);
+      }
+
       if (mapRef.current && !mapInstance.current) {
         const map = L.map(mapRef.current, { zoomControl: true }).setView([20.5937, 78.9629], 5);
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -62,6 +72,14 @@ export default function AccessibilityMap() {
           maxZoom: 18,
         }).addTo(map);
         mapInstance.current = map;
+        
+        // Force Leaflet to recalculate map size to fix tile loading issue
+        setTimeout(() => {
+          if (mapInstance.current) {
+            mapInstance.current.invalidateSize();
+          }
+        }, 300);
+
         setLoading(false);
       }
     }).catch(() => setLoading(false));
@@ -103,13 +121,18 @@ export default function AccessibilityMap() {
         if (fac) setSelected(fac);
       });
 
-      // Accessibility zones
-      if (showZones && facility.accessibilityZone) {
-        const zoneColor = ZONE_COLORS[facility.accessibilityZone.color] || "rgba(59,130,246,0.1)";
+      // Accessibility zones (mocking if not present)
+      const mockZone = facility.accessibilityZone || {
+        radius: Math.random() * 15 + 5, // 5 to 20 km
+        color: ["green", "yellow", "orange", "red"][Math.floor(Math.random() * 4)] as any,
+      };
+
+      if (showZones && mockZone) {
+        const zoneColor = ZONE_COLORS[mockZone.color] || "rgba(59,130,246,0.1)";
         L.circle([facility.lat, facility.lng], {
-          radius: facility.accessibilityZone.radius * 1000,
+          radius: mockZone.radius * 1000,
           fillColor: zoneColor,
-          color: facility.accessibilityZone.color === "red" ? "#EF4444" : facility.accessibilityZone.color === "orange" ? "#F97316" : facility.accessibilityZone.color === "yellow" ? "#F59E0B" : "#10B981",
+          color: mockZone.color === "red" ? "#EF4444" : mockZone.color === "orange" ? "#F97316" : mockZone.color === "yellow" ? "#F59E0B" : "#10B981",
           weight: 1,
           opacity: 0.3,
           fillOpacity: 0.15,
@@ -161,16 +184,16 @@ export default function AccessibilityMap() {
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
         {/* Map */}
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-3 relative h-[500px] rounded-xl overflow-hidden border border-blue-50 shadow-sm">
           {loading && (
-            <div className="h-[500px] bg-slate-100 rounded-xl flex items-center justify-center">
+            <div className="absolute inset-0 bg-slate-100 z-[1000] flex items-center justify-center">
               <div className="flex flex-col items-center gap-2">
                 <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
                 <p className="text-xs text-slate-500">Loading map...</p>
               </div>
             </div>
           )}
-          <div ref={mapRef} className={cn("rounded-xl overflow-hidden border border-blue-50 shadow-sm", loading ? "h-0" : "h-[500px]")} />
+          <div ref={mapRef} className="w-full h-full" />
         </div>
 
         {/* Sidebar */}

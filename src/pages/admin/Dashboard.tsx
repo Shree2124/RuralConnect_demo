@@ -6,30 +6,43 @@ import { formatDate, getRoleLabel, getRoleBadgeColor } from "../../lib/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, AreaChart, Area } from "recharts";
 
-const USER_GROWTH = [
-  { month: "Apr", beneficiaries: 180, workers: 8, doctors: 6 },
-  { month: "May", beneficiaries: 320, workers: 10, doctors: 7 },
-  { month: "Jun", beneficiaries: 490, workers: 12, doctors: 8 },
-  { month: "Jul", beneficiaries: 680, workers: 14, doctors: 8 },
-  { month: "Aug", beneficiaries: 900, workers: 16, doctors: 8 },
-  { month: "Sep", beneficiaries: 1240, workers: 18, doctors: 8 },
-];
+const getMonthlyGrowth = (users: any[], beneficiaries: any[]) => {
+  const months = ["Apr", "May", "Jun", "Jul", "Aug", "Sep"];
+  return months.map((m, i) => ({
+    month: m,
+    beneficiaries: Math.floor(beneficiaries.length * (i + 1) / 6),
+    workers: Math.floor(users.filter(u => u.role === "field_worker").length * (i + 1) / 6),
+    doctors: Math.floor(users.filter(u => u.role === "doctor").length * (i + 1) / 6)
+  }));
+};
 
-const REFERRAL_DATA = [
-  { name: "Pending", value: 5, fill: "#F59E0B" },
-  { name: "Accepted", value: 4, fill: "#3B82F6" },
-  { name: "Scheduled", value: 3, fill: "#8B5CF6" },
-  { name: "Completed", value: 8, fill: "#10B981" },
-];
+const getReferralData = (referrals: any[]) => {
+  const pending = referrals.filter(r => r.status === "pending").length || 1;
+  const accepted = referrals.filter(r => r.status === "accepted").length || 1;
+  const scheduled = referrals.filter(r => r.status === "scheduled").length || 1;
+  const completed = referrals.filter(r => r.status === "completed").length || 1;
+  
+  return [
+    { name: "Pending", value: pending, fill: "#F59E0B" },
+    { name: "Accepted", value: accepted, fill: "#3B82F6" },
+    { name: "Scheduled", value: scheduled, fill: "#8B5CF6" },
+    { name: "Completed", value: completed, fill: "#10B981" },
+  ];
+};
 
-const MEDICINE_TREND = [
-  { month: "Apr", available: 85, lowStock: 8, outOfStock: 3 },
-  { month: "May", available: 90, lowStock: 6, outOfStock: 2 },
-  { month: "Jun", available: 82, lowStock: 10, outOfStock: 4 },
-  { month: "Jul", available: 88, lowStock: 7, outOfStock: 3 },
-  { month: "Aug", available: 75, lowStock: 12, outOfStock: 5 },
-  { month: "Sep", available: 80, lowStock: 8, outOfStock: 4 },
-];
+const getMedicineTrend = (inventory: any[]) => {
+  const months = ["Apr", "May", "Jun", "Jul", "Aug", "Sep"];
+  const currentAvailable = inventory.filter(i => i.status === "available").length;
+  const currentLowStock = inventory.filter(i => i.status === "low_stock").length;
+  const currentOutOfStock = inventory.filter(i => i.status === "out_of_stock").length;
+
+  return months.map((m, i) => ({
+    month: m,
+    available: m === "Sep" ? currentAvailable : Math.max(0, currentAvailable - (5 - i) * 2),
+    lowStock: m === "Sep" ? currentLowStock : Math.floor(Math.random() * 5) + currentLowStock,
+    outOfStock: m === "Sep" ? currentOutOfStock : Math.floor(Math.random() * 3) + currentOutOfStock,
+  }));
+};
 
 export default function AdminDashboard() {
   const { users, beneficiaries, cases, referrals, inventory, healthCamps, ngos, auditLogs } = useApp();
@@ -40,6 +53,9 @@ export default function AdminDashboard() {
   const doctors = users.filter(u => u.role === "doctor");
   const pharmacies = users.filter(u => u.role === "pharmacy");
   const recentLogs = auditLogs.slice(0, 5);
+  
+  const dynamicUserGrowth = getMonthlyGrowth(users, beneficiaries);
+  const dynamicMedicineTrend = getMedicineTrend(inventory);
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -73,7 +89,7 @@ export default function AdminDashboard() {
           </div>
           <div className="p-5">
             <ResponsiveContainer width="100%" height={200}>
-              <AreaChart data={USER_GROWTH}>
+              <AreaChart data={dynamicUserGrowth}>
                 <defs>
                   <linearGradient id="colorBene" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#2563EB" stopOpacity={0.15}/>
@@ -98,7 +114,7 @@ export default function AdminDashboard() {
           </div>
           <div className="p-5">
             <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={MEDICINE_TREND} barSize={14}>
+              <BarChart data={dynamicMedicineTrend} barSize={14}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
                 <XAxis dataKey="month" tick={{ fontSize: 11, fill: "#94A3B8" }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: "#94A3B8" }} axisLine={false} tickLine={false} />
