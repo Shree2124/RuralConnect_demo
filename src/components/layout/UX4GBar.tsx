@@ -88,7 +88,7 @@ export function UX4GBar() {
   );
 
   return (
-    <div className="w-full bg-[#1e293b] text-white py-1 px-3 sm:px-4 text-[11px] flex justify-between items-center z-50 sticky top-0 overflow-x-hidden">
+    <div className="w-full bg-[#1e293b] text-white h-7 px-3 sm:px-4 text-[11px] flex justify-between items-center z-50 sticky top-0 overflow-x-hidden">
       <div className="flex gap-2 sm:gap-4 items-center min-w-0">
         <span className="hidden sm:inline whitespace-nowrap">भारत सरकार | Government of India</span>
         <span className="sm:hidden text-[10px] whitespace-nowrap">GoI Portal</span>

@@ -34,7 +34,7 @@ export function DashboardLayout() {
 
       {/* Sidebar */}
       <div
-        className={`fixed left-0 top-7 z-40 h-[calc(100vh-28px)] transition-transform duration-300
+        className={`fixed left-0 top-7 z-40 h-[calc(100dvh-28px)] transition-transform duration-300
           ${isMobile ? (mobileOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full") : "translate-x-0"}
         `}
         style={{ width: sidebarWidth }}

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Users, ClipboardList, RefreshCw, MapPin, Activity, UserPlus, AlertTriangle, Wifi, WifiOff, CheckCircle, Clock } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useApp } from "../../context/AppContext";
-import { Card, StatCard, Button, Badge, Avatar } from "../../components/ui";
-import { formatDate, timeAgo, getSeverityColor } from "../../lib/utils";
+import { Card, StatCard, Button, Avatar } from "../../components/ui";
+import { formatDate, timeAgo } from "../../lib/utils";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -49,7 +49,6 @@ export default function FieldWorkerDashboard() {
       {/* Stat Cards */}
       <div className="stat-grid">
         <StatCard title="My Families" value={myBeneficiaries.length} icon={<Users size={20} className="text-blue-600" />} iconBg="bg-blue-100" />
-        <StatCard title="Offline Drafts" value={offlineDrafts} icon={<WifiOff size={20} className="text-amber-600" />} iconBg="bg-amber-100" />
         <StatCard title="Pending Sync" value={pendingSyncCount} icon={<RefreshCw size={20} className="text-purple-600" />} iconBg="bg-purple-100" change={pendingSyncCount > 0 ? "Needs sync" : "All synced"} changeType={pendingSyncCount > 0 ? "down" : "up"} />
         <StatCard title="Today's Visits" value={Math.min(myBeneficiaries.length, Math.floor(Math.random() * 5) + 1)} icon={<MapPin size={20} className="text-teal-600" />} iconBg="bg-teal-100" />
         <StatCard title="High Priority" value={highPriority.length} icon={<AlertTriangle size={20} className="text-red-500" />} iconBg="bg-red-100" />

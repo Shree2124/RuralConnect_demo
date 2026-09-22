@@ -132,9 +132,7 @@ export function Sidebar({ collapsed, onToggle, onMobileClose }: SidebarProps) {
 
   return (
     <aside className={cn(
-      "flex flex-col bg-white border-r border-blue-50 shadow-sm transition-all duration-300 fixed left-0 top-7 z-40",
-      "h-[calc(100vh-28px)]",
-      collapsed ? "w-16" : "w-64"
+      "flex flex-col bg-white border-r border-blue-50 shadow-sm transition-all duration-300 w-full h-full"
     )}>
       {/* Header */}
       <div className={cn("flex items-center px-4 py-4 border-b border-blue-50 flex-shrink-0", collapsed ? "justify-center" : "gap-3")}>
@@ -202,7 +200,7 @@ export function Sidebar({ collapsed, onToggle, onMobileClose }: SidebarProps) {
       </nav>
 
       {/* Footer */}
-      <div className="px-2 py-3 border-t border-blue-50 space-y-1">
+      <div className="px-2 pt-3 pb-6 sm:pb-3 border-t border-blue-50 space-y-1 flex-shrink-0">
         <NavLink
           to="/architecture"
           className={cn("flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-500 hover:bg-slate-50 transition-colors", collapsed && "justify-center")}

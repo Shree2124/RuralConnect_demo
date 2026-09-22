@@ -222,26 +222,86 @@ export const MOCK_NOTIFICATIONS: Notification[] = [
 // HEALTHCARE FACILITIES
 // ============================
 export const MOCK_FACILITIES: HealthcareFacility[] = [
-  { id: "hf1", name: "PHC Palghar", type: "phc", lat: 19.698, lng: 72.769, address: "Near ST Bus Stand, Palghar", district: "Palghar", state: "Maharashtra", pinCode: "401404", contactNumber: "02525-252841", doctors: 2, beds: 6, operatingHours: "8 AM – 4 PM (Mon–Sat)", services: ["OPD", "Maternity", "Vaccination", "Lab"], accessibilityScore: 72 },
-  { id: "hf2", name: "CHC Nandurbar", type: "chc", lat: 21.362, lng: 74.240, address: "Civil Hospital Road, Nandurbar", district: "Nandurbar", state: "Maharashtra", pinCode: "425412", contactNumber: "02564-222101", doctors: 5, beds: 30, operatingHours: "24 Hours", services: ["OPD", "IPD", "Surgery", "Maternity", "ICU", "Lab", "Pharmacy"], accessibilityScore: 68 },
-  { id: "hf3", name: "District Hospital Barmer", type: "district_hospital", lat: 25.752, lng: 71.393, address: "Hospital Road, Barmer", district: "Barmer", state: "Rajasthan", pinCode: "344001", contactNumber: "02982-220101", doctors: 12, beds: 100, operatingHours: "24 Hours", services: ["Emergency", "Surgery", "ICU", "Radiology", "Pharmacy", "Blood Bank"], accessibilityScore: 60 },
-  { id: "hf4", name: "Ayushman Arogya Mandir Dhorimanna", type: "arogya_mandir", lat: 25.389, lng: 71.956, address: "Main Road, Dhorimanna", district: "Barmer", state: "Rajasthan", pinCode: "344035", doctors: 1, beds: 2, operatingHours: "9 AM – 3 PM (Mon–Sat)", services: ["OPD", "Vaccination", "Wellness"], accessibilityScore: 35 },
-  { id: "hf5", name: "Sub-Centre Chamorshi", type: "sub_centre", lat: 20.214, lng: 79.912, address: "Village Chamorshi", district: "Gadchiroli", state: "Maharashtra", pinCode: "442605", doctors: 0, beds: 0, operatingHours: "9 AM – 1 PM", services: ["ANM Visit", "Vaccination", "Basic Medicines"], accessibilityScore: 28 },
-  { id: "hf6", name: "Ayushman Arogya Mandir Safale", type: "arogya_mandir", lat: 19.723, lng: 72.818, address: "Safale Village Road", district: "Palghar", state: "Maharashtra", pinCode: "401404", doctors: 1, beds: 1, operatingHours: "9 AM – 2 PM (Mon–Fri)", services: ["OPD", "Vaccination", "ANC", "Wellness"], accessibilityScore: 55 },
-  { id: "hf7", name: "PHC Akkalkuwa", type: "phc", lat: 21.550, lng: 74.020, address: "Akkalkuwa Town", district: "Nandurbar", state: "Maharashtra", pinCode: "425415", contactNumber: "02567-260101", doctors: 2, beds: 6, operatingHours: "8 AM – 4 PM (Mon–Sat)", services: ["OPD", "Maternity", "Vaccination"], accessibilityScore: 42 },
-  { id: "hf8", name: "Community Health Camp — Palghar", type: "ngo_camp", lat: 19.700, lng: 72.770, address: "Gram Panchayat Ground, Palghar", district: "Palghar", state: "Maharashtra", pinCode: "401404", services: ["General OPD", "Medicines", "Vaccination", "Health Awareness"], accessibilityScore: 80 },
-  { id: "hf9", name: "PHC Chauhtan", type: "phc", lat: 25.249, lng: 71.267, address: "Chauhtan Town, Barmer", district: "Barmer", state: "Rajasthan", pinCode: "344031", doctors: 1, beds: 4, services: ["OPD", "Vaccination"], accessibilityScore: 30 },
-  { id: "hf10", name: "CHC Gadchiroli", type: "chc", lat: 20.100, lng: 80.000, address: "Civil Lines, Gadchiroli", district: "Gadchiroli", state: "Maharashtra", pinCode: "442605", doctors: 6, beds: 50, operatingHours: "24 Hours", services: ["OPD", "IPD", "Surgery", "Maternity", "Lab"], accessibilityScore: 55 },
-  { id: "hf11", name: "Community Pharmacy Palghar", type: "pharmacy", lat: 19.698, lng: 72.765, address: "Market Area, Palghar", district: "Palghar", state: "Maharashtra", pinCode: "401404", contactNumber: "9876500001", operatingHours: "8 AM – 9 PM", services: ["Generic Medicines", "OTC Drugs", "BP/Sugar Monitoring"], accessibilityScore: 90 },
-  { id: "hf12", name: "Jan Aushadhi Kendra Barmer", type: "pharmacy", lat: 25.750, lng: 71.395, address: "Near Bus Stand, Barmer", district: "Barmer", state: "Rajasthan", pinCode: "344001", contactNumber: "9876500002", operatingHours: "9 AM – 7 PM", services: ["Generic Medicines", "Government Schemes"], accessibilityScore: 62 },
-  { id: "hf13", name: "District Hospital Gadchiroli", type: "district_hospital", lat: 20.098, lng: 80.001, address: "Hospital Road, Gadchiroli", district: "Gadchiroli", state: "Maharashtra", pinCode: "442605", doctors: 8, beds: 80, operatingHours: "24 Hours", services: ["Emergency", "Surgery", "ICU", "Pharmacy"], accessibilityScore: 48 },
-  { id: "hf14", name: "PHC Dhorimanna", type: "phc", lat: 25.392, lng: 71.951, address: "Main Road, Dhorimanna Village", district: "Barmer", state: "Rajasthan", pinCode: "344035", doctors: 1, beds: 4, operatingHours: "8 AM – 2 PM", services: ["OPD", "Vaccination", "Basic Lab"], accessibilityScore: 22 },
-  { id: "hf15", name: "PHC Jawhar", type: "phc", lat: 19.905, lng: 73.222, address: "Jawahar Town", district: "Palghar", state: "Maharashtra", pinCode: "401302", doctors: 2, beds: 6, operatingHours: "8 AM – 4 PM (Mon–Sat)", services: ["OPD", "Maternity", "Vaccination"], accessibilityScore: 50 },
-  { id: "hf16", name: "Tribal CHC Etapalli", type: "chc", lat: 19.250, lng: 80.450, address: "Etapalli Town", district: "Gadchiroli", state: "Maharashtra", pinCode: "442702", doctors: 3, beds: 20, operatingHours: "24 Hours", services: ["OPD", "IPD", "Maternity", "Vaccination"], accessibilityScore: 20 },
-  { id: "hf17", name: "PHC Ramsar", type: "phc", lat: 25.847, lng: 71.022, address: "Ramsar Village", district: "Barmer", state: "Rajasthan", pinCode: "344001", doctors: 1, beds: 2, operatingHours: "9 AM – 1 PM", services: ["OPD", "Vaccination"], accessibilityScore: 18 },
-  { id: "hf18", name: "Seva NGO Health Camp — Nandurbar", type: "ngo_camp", lat: 21.370, lng: 74.245, address: "Gram Panchayat Bhavan, Nandurbar", district: "Nandurbar", state: "Maharashtra", pinCode: "425412", services: ["OPD", "Medicines", "Vaccination", "Nutrition"], accessibilityScore: 75 },
-  { id: "hf19", name: "Akash Medical Store", type: "pharmacy", lat: 20.103, lng: 80.005, address: "Main Market, Gadchiroli", district: "Gadchiroli", state: "Maharashtra", pinCode: "442605", contactNumber: "9876500003", operatingHours: "9 AM – 9 PM", services: ["Prescription Medicines", "OTC", "BP Monitor"], accessibilityScore: 70 },
-  { id: "hf20", name: "Sub-Centre Kasa", type: "sub_centre", lat: 19.817, lng: 73.062, address: "Kasa Village, Palghar", district: "Palghar", state: "Maharashtra", pinCode: "401405", services: ["ANM Visit", "Vaccination", "Ante-natal Care"], accessibilityScore: 45 },
+  {
+    id: "hf1", name: "PHC Palghar", type: "phc", lat: 19.698, lng: 72.769, address: "Near ST Bus Stand, Palghar", district: "Palghar", state: "Maharashtra", pinCode: "401404", contactNumber: "02525-252841", doctors: 2, beds: 6, operatingHours: "8 AM – 4 PM (Mon–Sat)", services: ["OPD", "Maternity", "Vaccination", "Lab"], accessibilityScore: 72,
+    operationalStatus: ""
+  },
+  {
+    id: "hf2", name: "CHC Nandurbar", type: "chc", lat: 21.362, lng: 74.240, address: "Civil Hospital Road, Nandurbar", district: "Nandurbar", state: "Maharashtra", pinCode: "425412", contactNumber: "02564-222101", doctors: 5, beds: 30, operatingHours: "24 Hours", services: ["OPD", "IPD", "Surgery", "Maternity", "ICU", "Lab", "Pharmacy"], accessibilityScore: 68,
+    operationalStatus: ""
+  },
+  {
+    id: "hf3", name: "District Hospital Barmer", type: "district_hospital", lat: 25.752, lng: 71.393, address: "Hospital Road, Barmer", district: "Barmer", state: "Rajasthan", pinCode: "344001", contactNumber: "02982-220101", doctors: 12, beds: 100, operatingHours: "24 Hours", services: ["Emergency", "Surgery", "ICU", "Radiology", "Pharmacy", "Blood Bank"], accessibilityScore: 60,
+    operationalStatus: ""
+  },
+  {
+    id: "hf4", name: "Ayushman Arogya Mandir Dhorimanna", type: "arogya_mandir", lat: 25.389, lng: 71.956, address: "Main Road, Dhorimanna", district: "Barmer", state: "Rajasthan", pinCode: "344035", doctors: 1, beds: 2, operatingHours: "9 AM – 3 PM (Mon–Sat)", services: ["OPD", "Vaccination", "Wellness"], accessibilityScore: 35,
+    operationalStatus: ""
+  },
+  {
+    id: "hf5", name: "Sub-Centre Chamorshi", type: "sub_centre", lat: 20.214, lng: 79.912, address: "Village Chamorshi", district: "Gadchiroli", state: "Maharashtra", pinCode: "442605", doctors: 0, beds: 0, operatingHours: "9 AM – 1 PM", services: ["ANM Visit", "Vaccination", "Basic Medicines"], accessibilityScore: 28,
+    operationalStatus: ""
+  },
+  {
+    id: "hf6", name: "Ayushman Arogya Mandir Safale", type: "arogya_mandir", lat: 19.723, lng: 72.818, address: "Safale Village Road", district: "Palghar", state: "Maharashtra", pinCode: "401404", doctors: 1, beds: 1, operatingHours: "9 AM – 2 PM (Mon–Fri)", services: ["OPD", "Vaccination", "ANC", "Wellness"], accessibilityScore: 55,
+    operationalStatus: ""
+  },
+  {
+    id: "hf7", name: "PHC Akkalkuwa", type: "phc", lat: 21.550, lng: 74.020, address: "Akkalkuwa Town", district: "Nandurbar", state: "Maharashtra", pinCode: "425415", contactNumber: "02567-260101", doctors: 2, beds: 6, operatingHours: "8 AM – 4 PM (Mon–Sat)", services: ["OPD", "Maternity", "Vaccination"], accessibilityScore: 42,
+    operationalStatus: ""
+  },
+  {
+    id: "hf8", name: "Community Health Camp — Palghar", type: "ngo_camp", lat: 19.700, lng: 72.770, address: "Gram Panchayat Ground, Palghar", district: "Palghar", state: "Maharashtra", pinCode: "401404", services: ["General OPD", "Medicines", "Vaccination", "Health Awareness"], accessibilityScore: 80,
+    operationalStatus: ""
+  },
+  {
+    id: "hf9", name: "PHC Chauhtan", type: "phc", lat: 25.249, lng: 71.267, address: "Chauhtan Town, Barmer", district: "Barmer", state: "Rajasthan", pinCode: "344031", doctors: 1, beds: 4, services: ["OPD", "Vaccination"], accessibilityScore: 30,
+    operationalStatus: ""
+  },
+  {
+    id: "hf10", name: "CHC Gadchiroli", type: "chc", lat: 20.100, lng: 80.000, address: "Civil Lines, Gadchiroli", district: "Gadchiroli", state: "Maharashtra", pinCode: "442605", doctors: 6, beds: 50, operatingHours: "24 Hours", services: ["OPD", "IPD", "Surgery", "Maternity", "Lab"], accessibilityScore: 55,
+    operationalStatus: ""
+  },
+  {
+    id: "hf11", name: "Community Pharmacy Palghar", type: "pharmacy", lat: 19.698, lng: 72.765, address: "Market Area, Palghar", district: "Palghar", state: "Maharashtra", pinCode: "401404", contactNumber: "9876500001", operatingHours: "8 AM – 9 PM", services: ["Generic Medicines", "OTC Drugs", "BP/Sugar Monitoring"], accessibilityScore: 90,
+    operationalStatus: ""
+  },
+  {
+    id: "hf12", name: "Jan Aushadhi Kendra Barmer", type: "pharmacy", lat: 25.750, lng: 71.395, address: "Near Bus Stand, Barmer", district: "Barmer", state: "Rajasthan", pinCode: "344001", contactNumber: "9876500002", operatingHours: "9 AM – 7 PM", services: ["Generic Medicines", "Government Schemes"], accessibilityScore: 62,
+    operationalStatus: ""
+  },
+  {
+    id: "hf13", name: "District Hospital Gadchiroli", type: "district_hospital", lat: 20.098, lng: 80.001, address: "Hospital Road, Gadchiroli", district: "Gadchiroli", state: "Maharashtra", pinCode: "442605", doctors: 8, beds: 80, operatingHours: "24 Hours", services: ["Emergency", "Surgery", "ICU", "Pharmacy"], accessibilityScore: 48,
+    operationalStatus: ""
+  },
+  {
+    id: "hf14", name: "PHC Dhorimanna", type: "phc", lat: 25.392, lng: 71.951, address: "Main Road, Dhorimanna Village", district: "Barmer", state: "Rajasthan", pinCode: "344035", doctors: 1, beds: 4, operatingHours: "8 AM – 2 PM", services: ["OPD", "Vaccination", "Basic Lab"], accessibilityScore: 22,
+    operationalStatus: ""
+  },
+  {
+    id: "hf15", name: "PHC Jawhar", type: "phc", lat: 19.905, lng: 73.222, address: "Jawahar Town", district: "Palghar", state: "Maharashtra", pinCode: "401302", doctors: 2, beds: 6, operatingHours: "8 AM – 4 PM (Mon–Sat)", services: ["OPD", "Maternity", "Vaccination"], accessibilityScore: 50,
+    operationalStatus: ""
+  },
+  {
+    id: "hf16", name: "Tribal CHC Etapalli", type: "chc", lat: 19.250, lng: 80.450, address: "Etapalli Town", district: "Gadchiroli", state: "Maharashtra", pinCode: "442702", doctors: 3, beds: 20, operatingHours: "24 Hours", services: ["OPD", "IPD", "Maternity", "Vaccination"], accessibilityScore: 20,
+    operationalStatus: ""
+  },
+  {
+    id: "hf17", name: "PHC Ramsar", type: "phc", lat: 25.847, lng: 71.022, address: "Ramsar Village", district: "Barmer", state: "Rajasthan", pinCode: "344001", doctors: 1, beds: 2, operatingHours: "9 AM – 1 PM", services: ["OPD", "Vaccination"], accessibilityScore: 18,
+    operationalStatus: ""
+  },
+  {
+    id: "hf18", name: "Seva NGO Health Camp — Nandurbar", type: "ngo_camp", lat: 21.370, lng: 74.245, address: "Gram Panchayat Bhavan, Nandurbar", district: "Nandurbar", state: "Maharashtra", pinCode: "425412", services: ["OPD", "Medicines", "Vaccination", "Nutrition"], accessibilityScore: 75,
+    operationalStatus: ""
+  },
+  {
+    id: "hf19", name: "Akash Medical Store", type: "pharmacy", lat: 20.103, lng: 80.005, address: "Main Market, Gadchiroli", district: "Gadchiroli", state: "Maharashtra", pinCode: "442605", contactNumber: "9876500003", operatingHours: "9 AM – 9 PM", services: ["Prescription Medicines", "OTC", "BP Monitor"], accessibilityScore: 70,
+    operationalStatus: ""
+  },
+  {
+    id: "hf20", name: "Sub-Centre Kasa", type: "sub_centre", lat: 19.817, lng: 73.062, address: "Kasa Village, Palghar", district: "Palghar", state: "Maharashtra", pinCode: "401405", services: ["ANM Visit", "Vaccination", "Ante-natal Care"], accessibilityScore: 45,
+    operationalStatus: ""
+  },
 ];
 
 // ============================
