@@ -1,5 +1,4 @@
-import React from "react";
-import { TrendingUp, Database, Activity, Server, RefreshCw } from "lucide-react";
+import { Database, Activity, Server, RefreshCw } from "lucide-react";
 import { useApp } from "../../context/AppContext";
 import { Card, StatCard } from "../../components/ui";
 
@@ -16,7 +15,7 @@ export default function SystemHealth() {
       </div>
 
       <div className="stat-grid">
-        <StatCard title="API Latency" value={metrics.latency} icon={<Activity size={20} className="text-blue-600" />} iconBg="bg-blue-100" change="Optimal" changeType="up" />
+        <StatCard title="API Latency" value="120ms" icon={<Activity size={20} className="text-blue-600" />} iconBg="bg-blue-100" change="Optimal" changeType="up" />
         <StatCard title="Database Latency" value="45ms" icon={<Database size={20} className="text-blue-600" />} iconBg="bg-blue-100" />
         <StatCard title="Pending Sync" value={pendingSync.length} icon={<RefreshCw size={20} className="text-amber-600" />} iconBg="bg-amber-100" />
         <StatCard title="Sync Conflicts" value={conflicts.length} icon={<Server size={20} className="text-red-500" />} iconBg="bg-red-100" change={conflicts.length > 0 ? "Needs resolution" : "Healthy"} changeType={conflicts.length > 0 ? "down" : "neutral"} />
